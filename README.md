@@ -1,4 +1,4 @@
-# fh3vc
+# Forza Horizon 3 Volume Control
 A little tool to control Forza's volume on PC
 
 # Will this get me banned? How does it work?
