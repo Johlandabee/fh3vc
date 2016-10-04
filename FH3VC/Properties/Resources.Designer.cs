@@ -61,12 +61,102 @@ namespace ForzaVolumeControl.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die https://github.com/Johlandabee/fh3vc ähnelt.
+        /// </summary>
+        internal static string AboutLink {
+            get {
+                return ResourceManager.GetString("AboutLink", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Icon ähnlich wie (Symbol).
         /// </summary>
         internal static System.Drawing.Icon AppIcon {
             get {
                 object obj = ResourceManager.GetObject("AppIcon", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Status ähnelt.
+        /// </summary>
+        internal static string LabelStatus {
+            get {
+                return ResourceManager.GetString("LabelStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Volume ähnelt.
+        /// </summary>
+        internal static string LabelVolume {
+            get {
+                return ResourceManager.GetString("LabelVolume", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die About ähnelt.
+        /// </summary>
+        internal static string MenuAbout {
+            get {
+                return ResourceManager.GetString("MenuAbout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Exit ähnelt.
+        /// </summary>
+        internal static string MenuExit {
+            get {
+                return ResourceManager.GetString("MenuExit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Toggle ähnelt.
+        /// </summary>
+        internal static string MenuToggle {
+            get {
+                return ResourceManager.GetString("MenuToggle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Initializing ähnelt.
+        /// </summary>
+        internal static string StatusInitializing {
+            get {
+                return ResourceManager.GetString("StatusInitializing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die OK ähnelt.
+        /// </summary>
+        internal static string StatusOk {
+            get {
+                return ResourceManager.GetString("StatusOk", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Searching game session ähnelt.
+        /// </summary>
+        internal static string StatusSearching {
+            get {
+                return ResourceManager.GetString("StatusSearching", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Hi there! FH3VC was minimized to your system tray. You can toggle the main window with a click on the symbol. ähnelt.
+        /// </summary>
+        internal static string ToTrayInfoText {
+            get {
+                return ResourceManager.GetString("ToTrayInfoText", resourceCulture);
             }
         }
     }

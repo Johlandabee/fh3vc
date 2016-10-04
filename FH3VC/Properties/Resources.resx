@@ -117,8 +117,38 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AboutLink" xml:space="preserve">
+    <value>https://github.com/Johlandabee/fh3vc</value>
+  </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="AppIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\AppIcon.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="LabelStatus" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="LabelVolume" xml:space="preserve">
+    <value>Volume</value>
+  </data>
+  <data name="MenuAbout" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="MenuExit" xml:space="preserve">
+    <value>Exit</value>
+  </data>
+  <data name="MenuToggle" xml:space="preserve">
+    <value>Toggle</value>
+  </data>
+  <data name="StatusInitializing" xml:space="preserve">
+    <value>Initializing</value>
+  </data>
+  <data name="StatusOk" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="StatusSearching" xml:space="preserve">
+    <value>Searching game session</value>
+  </data>
+  <data name="ToTrayInfoText" xml:space="preserve">
+    <value>Hi there! FH3VC was minimized to your system tray. You can toggle the main window with a click on the symbol.</value>
   </data>
 </root>

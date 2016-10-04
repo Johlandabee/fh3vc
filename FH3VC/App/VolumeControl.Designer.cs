@@ -25,63 +25,62 @@
         private void InitializeComponent() {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(VolumeControl));
-            this.volumeLevel = new System.Windows.Forms.TrackBar();
-            this.statusStrip = new System.Windows.Forms.StatusStrip();
-            this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.volumeLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.updateTimer = new System.Windows.Forms.Timer(this.components);
-            ((System.ComponentModel.ISupportInitialize)(this.volumeLevel)).BeginInit();
-            this.statusStrip.SuspendLayout();
+            this._volumeLevel = new System.Windows.Forms.TrackBar();
+            this._statusStrip = new System.Windows.Forms.StatusStrip();
+            this._statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this._volumeLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this._updateTimer = new System.Windows.Forms.Timer(this.components);
+            ((System.ComponentModel.ISupportInitialize)(this._volumeLevel)).BeginInit();
+            this._statusStrip.SuspendLayout();
             this.SuspendLayout();
             // 
-            // volumeLevel
+            // _volumeLevel
             // 
-            this.volumeLevel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.volumeLevel.Enabled = false;
-            this.volumeLevel.Location = new System.Drawing.Point(0, 0);
-            this.volumeLevel.Maximum = 100;
-            this.volumeLevel.Name = "volumeLevel";
-            this.volumeLevel.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.volumeLevel.Size = new System.Drawing.Size(272, 50);
-            this.volumeLevel.TabIndex = 0;
-            this.volumeLevel.TickStyle = System.Windows.Forms.TickStyle.None;
-            this.volumeLevel.ValueChanged += new System.EventHandler(this.OnVolumeChanged);
+            this._volumeLevel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this._volumeLevel.Enabled = false;
+            this._volumeLevel.Location = new System.Drawing.Point(0, 0);
+            this._volumeLevel.Maximum = 100;
+            this._volumeLevel.Name = "_volumeLevel";
+            this._volumeLevel.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this._volumeLevel.Size = new System.Drawing.Size(272, 50);
+            this._volumeLevel.TabIndex = 0;
+            this._volumeLevel.TickStyle = System.Windows.Forms.TickStyle.None;
+            this._volumeLevel.ValueChanged += new System.EventHandler(this.HandleVolumeChanged);
             // 
-            // statusStrip
+            // _statusStrip
             // 
-            this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.statusLabel,
-            this.volumeLabel});
-            this.statusStrip.Location = new System.Drawing.Point(0, 28);
-            this.statusStrip.Name = "statusStrip";
-            this.statusStrip.Size = new System.Drawing.Size(272, 22);
-            this.statusStrip.TabIndex = 3;
-            this.statusStrip.Text = "statusStrip1";
+            this._statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this._statusLabel,
+            this._volumeLabel});
+            this._statusStrip.Location = new System.Drawing.Point(0, 28);
+            this._statusStrip.Name = "_statusStrip";
+            this._statusStrip.Size = new System.Drawing.Size(272, 22);
+            this._statusStrip.TabIndex = 3;
             // 
-            // statusLabel
+            // _statusLabel
             // 
-            this.statusLabel.Name = "statusLabel";
-            this.statusLabel.Size = new System.Drawing.Size(79, 17);
-            this.statusLabel.Text = "Status: Empty";
+            this._statusLabel.Name = "_statusLabel";
+            this._statusLabel.Size = new System.Drawing.Size(65, 17);
+            this._statusLabel.Text = "Status: null";
             // 
-            // volumeLabel
+            // _volumeLabel
             // 
-            this.volumeLabel.Name = "volumeLabel";
-            this.volumeLabel.Size = new System.Drawing.Size(81, 17);
-            this.volumeLabel.Text = "Volume: 100%";
+            this._volumeLabel.Name = "_volumeLabel";
+            this._volumeLabel.Size = new System.Drawing.Size(81, 17);
+            this._volumeLabel.Text = "Volume: 100%";
             // 
-            // updateTimer
+            // _updateTimer
             // 
-            this.updateTimer.Interval = 300;
-            this.updateTimer.Tick += new System.EventHandler(this.OnTimerTick);
+            this._updateTimer.Interval = 300;
+            this._updateTimer.Tick += new System.EventHandler(this.HandleTimerTick);
             // 
             // VolumeControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(272, 50);
-            this.Controls.Add(this.statusStrip);
-            this.Controls.Add(this.volumeLevel);
+            this.Controls.Add(this._statusStrip);
+            this.Controls.Add(this._volumeLevel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
@@ -92,13 +91,14 @@
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Forza Horizon 3 Volume Control";
             this.TopMost = true;
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.OnFormClosing);
-            this.Load += new System.EventHandler(this.OnLoad);
-            ((System.ComponentModel.ISupportInitialize)(this.volumeLevel)).EndInit();
-            this.statusStrip.ResumeLayout(false);
-            this.statusStrip.PerformLayout();
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.HandleFormClosing);
+            this.Load += new System.EventHandler(this.HandleLoad);
+            ((System.ComponentModel.ISupportInitialize)(this._volumeLevel)).EndInit();
+            this._statusStrip.ResumeLayout(false);
+            this._statusStrip.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -106,10 +106,10 @@
 
         #endregion
 
-        private System.Windows.Forms.TrackBar volumeLevel;
-        private System.Windows.Forms.StatusStrip statusStrip;
-        private System.Windows.Forms.ToolStripStatusLabel statusLabel;
-        private System.Windows.Forms.ToolStripStatusLabel volumeLabel;
-        private System.Windows.Forms.Timer updateTimer;
+        private System.Windows.Forms.TrackBar _volumeLevel;
+        private System.Windows.Forms.StatusStrip _statusStrip;
+        private System.Windows.Forms.ToolStripStatusLabel _statusLabel;
+        private System.Windows.Forms.ToolStripStatusLabel _volumeLabel;
+        private System.Windows.Forms.Timer _updateTimer;
     }
 }

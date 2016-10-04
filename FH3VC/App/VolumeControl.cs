@@ -1,51 +1,65 @@
-﻿using System;
+﻿using AudioSwitcher.AudioApi.CoreAudio;
+using AudioSwitcher.AudioApi.Session;
+using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using AudioSwitcher.AudioApi.CoreAudio;
-using AudioSwitcher.AudioApi.Session;
+using ForzaVolumeControl.Properties;
 
 namespace ForzaVolumeControl.App {
+
     public partial class VolumeControl : Form {
         private CoreAudioDevice _device;
         private bool _searchRunning;
         private IAudioSession _session;
 
-        const string BINARY_NAME = "forza_x64_release_final.exe";
+        private const string BinaryName = "forza_x64_release_final.exe";
+
+        private const int SearchInterval = 300;
+        private const int UpdateInterval = 300;
 
         public VolumeControl() {
             InitializeComponent();
+
+            _searchRunning = false;
+            _volumeLevel.Enabled = false;
+            _updateTimer.Interval = UpdateInterval;
         }
 
-        private void OnLoad(object sender, EventArgs e) {
-            _searchRunning = false;
-
-            volumeLabel.Text = $"Volume: {volumeLevel.Value}%";
-            volumeLevel.Enabled = false;
-
-            SetStatus("Initializing...");
+        private void Init() {
+            SetStatusLabel(Resources.StatusInitializing);
+            SetVolumeLabel(0);
 
             var getDevice = new Task<CoreAudioDevice>(() => {
                 var controller = new CoreAudioController();
                 return controller.DefaultPlaybackDevice;
             });
-            
+
             getDevice.ContinueWith(t => {
                 _device = t.Result;
-                updateTimer.Enabled = true;
+                _updateTimer.Enabled = true;
             }, TaskScheduler.FromCurrentSynchronizationContext());
-            
-            getDevice.Start();            
+
+            getDevice.Start();
+        }
+
+        private void SetStatusLabel(string status, Color? color = null) {
+            _statusLabel.ForeColor = color ?? Color.Black;
+            _statusLabel.Text = $"{Resources.LabelStatus}: {status}";
+        }
+
+        private void SetVolumeLabel(int volume) {
+            _volumeLabel.Text = $"{Resources.LabelVolume}: {_volumeLevel.Value}%";
         }
 
         private async void Search() {
             if (_searchRunning) return;
 
             _searchRunning = true;
-            SetStatus("Searching game session");
+            SetStatusLabel(Resources.StatusSearching);
 
             _session = null;
             while (_session == null) {
@@ -55,15 +69,14 @@ namespace ForzaVolumeControl.App {
             _searchRunning = false;
         }
 
-        private async Task<IAudioSession> GetAudioSessionAsync(IAudioSessionEndpoint device) {
-            var sessions = await device.SessionController.ActiveSessionsAsync();
+        private static async Task<IAudioSession> GetAudioSessionAsync(IAudioSessionEndpoint device) {
+            var sessions = (await device.SessionController.ActiveSessionsAsync()).ToArray();
+
             IAudioSession session = null;
+            if (sessions.Count() >= 0)
+                session = sessions.FirstOrDefault(s => Path.GetFileName(s.ExecutablePath) == BinaryName);
 
-            if (sessions?.Count() >= 0) {
-                session = sessions.FirstOrDefault(s => Path.GetFileName(s.ExecutablePath) == BINARY_NAME);
-            }
-
-            await Task.Delay(300);
+            await Task.Delay(SearchInterval);
             return session;
         }
 
@@ -72,39 +85,38 @@ namespace ForzaVolumeControl.App {
                    && Process.GetProcesses().Any(p => p.Id == _session.ProcessId);
         }
 
-        private void OnTimerTick(object sender, EventArgs e) {
+        private void UpdateValues() {
             if (IsSessionValid()) {
-                SetStatus("OK");
-                volumeLevel.Enabled = true;
-                volumeLevel.Value = (int) _session.Volume;
-                volumeLabel.Text = $"Volume: {volumeLevel.Value}%";
-            }
-            else {
-                volumeLevel.Enabled = false;
+                SetStatusLabel(Resources.StatusOk, Color.Green);
+                _volumeLevel.Enabled = true;
+                _volumeLevel.Value = (int)_session.Volume;
+                SetVolumeLabel(_volumeLevel.Value);
+            } else {
+                _volumeLevel.Enabled = false;
                 Search();
             }
         }
 
-        private void OnVolumeChanged(object sender, EventArgs e) {
+        private void HandleTimerTick(object sender, EventArgs e) {
+            UpdateValues();
+        }
+
+        private void HandleLoad(object sender, EventArgs e) {
+            Init();
+        }
+
+        private void HandleVolumeChanged(object sender, EventArgs e) {
             if (IsSessionValid()) {
-                _session.Volume = volumeLevel.Value;
-                volumeLabel.Text = $"Volume: {volumeLevel.Value}%";
-            }
-            else {
-                volumeLevel.Enabled = false;
+                _session.Volume = _volumeLevel.Value;
+            } else {
+                _volumeLevel.Enabled = false;
                 Search();
             }
         }
 
-        private void OnFormClosing(object sender, FormClosingEventArgs e) {
+        private void HandleFormClosing(object sender, FormClosingEventArgs e) {
             e.Cancel = true;
             Hide();
-        }
-
-
-        private void SetStatus(string status) {
-            statusLabel.Text = $"Status: {status}";
-            statusLabel.ForeColor = status == "OK" ? Color.Green : Color.Black;
         }
     }
 }

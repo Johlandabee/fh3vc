@@ -1,9 +1,11 @@
-﻿using System;
+﻿using ForzaVolumeControl.App;
+using System;
 using System.Windows.Forms;
-using ForzaVolumeControl.App;
 
 namespace ForzaVolumeControl {
+
     internal class Program {
+
         [STAThread]
         private static void Main(string[] args) {
             Application.EnableVisualStyles();
